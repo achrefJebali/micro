@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,8 +19,20 @@ public class Equipe implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private Niveau niveau;
-
-    private Integer detailEquipeId;
+    
+    // Bidirectional relationship with DetailEquipe
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinColumn(name = "detail_equipe_id")
+    private DetailEquipe detailEquipe;
+    
+    // Bidirectional ManyToMany relationship with Etudiant
+    @ManyToMany
+    @JoinTable(
+        name = "etudiant_equipe",
+        joinColumns = @JoinColumn(name = "equipe_id"),
+        inverseJoinColumns = @JoinColumn(name = "etudiant_id")
+    )
+    private Set<Etudiant> etudiants;
 
     // 📊 New fields for AI
     private Integer nbMembres;

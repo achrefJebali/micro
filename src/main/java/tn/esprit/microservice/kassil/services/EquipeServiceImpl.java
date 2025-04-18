@@ -9,13 +9,14 @@ import tn.esprit.microservice.kassil.repositories.EquipeRepository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Slf4j
 @AllArgsConstructor
 @Service
-public class EquipeServiceImpl implements IEquipeService {
+public class EquipeServiceImpl implements EquipeService, IEquipeService {
 
     private final EquipeRepository equipeRepository;
     private final EmailService emailService;
@@ -50,8 +51,8 @@ public class EquipeServiceImpl implements IEquipeService {
             } else if (oldNiveau == Niveau.SENIOR) {
                 equipe.setNiveau(Niveau.EXPERT);
             }
+            equipeRepository.save(equipe);
             if (oldNiveau != equipe.getNiveau()) {
-                equipeRepository.save(equipe);
                 emailService.sendNotification(
                         "Équipe Évoluée",
                         "L'équipe " + equipe.getNomEquipe() + " est maintenant " + equipe.getNiveau()
@@ -72,5 +73,38 @@ public class EquipeServiceImpl implements IEquipeService {
         return equipeRepository.save(e);
     }
 
+    // Implementation of EquipeService interface methods
+    @Override
+    public List<Equipe> getAllEquipes() {
+        return StreamSupport.stream(equipeRepository.findAll().spliterator(), false)
+                .collect(Collectors.toList());
+    }
 
+    @Override
+    public Optional<Equipe> getEquipeById(Integer id) {
+        return equipeRepository.findById(id);
+    }
+
+    @Override
+    public Equipe saveEquipe(Equipe equipe) {
+        return equipeRepository.save(equipe);
+    }
+
+    @Override
+    public List<Equipe> getEquipesByNiveau(String niveau) {
+        try {
+            Niveau niveauEnum = Niveau.valueOf(niveau.toUpperCase());
+            return StreamSupport.stream(equipeRepository.findAll().spliterator(), false)
+                    .filter(equipe -> equipe.getNiveau() == niveauEnum)
+                    .collect(Collectors.toList());
+        } catch (IllegalArgumentException e) {
+            log.error("Invalid niveau value: {}", niveau);
+            return List.of();
+        }
+    }
+
+    @Override
+    public Integer countEquipes() {
+        return (int) equipeRepository.count();
+    }
 }

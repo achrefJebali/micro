@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: kassil-service
+  cloud:
+    config:
+      enabled: true
+      import-check:
+        enabled: false
+      uri: http://localhost:8888
+      fail-fast: false
+      retry:
+        max-attempts: 6
+        initial-interval: 1000
+        max-interval: 2000
+        multiplier: 1.1
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    should-enforce-registration-at-init: false
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    hostname: localhost

@@ -1,0 +1,52 @@
+server:
+  servlet:
+    context-path: /kassil
+  port: 8089
+
+spring:
+  application:
+    name: kassil-service
+  datasource:
+    url: jdbc:h2:mem:Kassil
+    driverClassName: org.h2.Driver
+    username: user
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  mail:
+    host: smtp.mailtrap.io
+    port: 2525
+    username: 48006cca348073
+    password: dbad446aeaa0c9
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+# Security Configuration
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/kassil-realm
+          jwk-set-uri: http://localhost:8080/realms/kassil-realm/protocol/openid-connect/certs
