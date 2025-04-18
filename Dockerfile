@@ -1,4 +1,10 @@
-FROM openjdk:17
-EXPOSE 8090
-ADD target/ApiGetWay-0.0.1-SNAPSHOT.jar ApiGetWay.jar
-ENTRYPOINT ["java" , "-jar" , "ApiGetWay.jar"]
+FROM maven:3.8.5-openjdk-17-slim AS build
+WORKDIR /app
+COPY . /app
+RUN mvn package -DskipTests
+
+FROM openjdk:17-slim
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+EXPOSE 8081
+ENTRYPOINT ["java","-jar","app.jar"]
