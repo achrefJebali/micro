@@ -1,0 +1,106 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Contract Details</h2>
+    <div>
+      <button class="btn btn-outline-secondary me-2" (click)="goBack()">
+        <i class="material-icons">arrow_back</i> Back
+      </button>
+      <button class="btn btn-warning me-2" (click)="editContract()">
+        <i class="material-icons">edit</i> Edit
+      </button>
+      <button class="btn btn-danger" (click)="deleteContract()">
+        <i class="material-icons">delete</i> Delete
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div *ngIf="loading" class="text-center my-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="!loading && contract">
+    <div class="col-md-8">
+      <div class="card mb-4">
+        <div class="card-header">
+          <div class="d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">{{ contract.nom }}</h4>
+            <span class="badge" [ngClass]="!contract.archive ? 'bg-success' : 'bg-secondary'">
+              {{ !contract.archive ? 'Active' : 'Archived' }}
+            </span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h5>Basic Information</h5>
+              <table class="table table-borderless">
+                <tbody>
+                  <tr>
+                    <th scope="row">ID:</th>
+                    <td>{{ contract.idContrat }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Speciality:</th>
+                    <td>{{ contract.specialite }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Amount:</th>
+                    <td>{{ contract.montantContrat }} $</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-md-6">
+              <h5>Timeline</h5>
+              <table class="table table-borderless">
+                <tbody>
+                  <tr>
+                    <th scope="row">Start Date:</th>
+                    <td>{{ contract.dateDebutContrat | date:'mediumDate' }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">End Date:</th>
+                    <td>{{ contract.dateFinContrat | date:'mediumDate' }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Duration:</th>
+                    <td>
+  {{ contractDurationMonths | number:'1.0-0' }} months
+</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">Modification History</h5>
+        </div>
+        <div class="card-body">
+          <div *ngIf="contract.historiques && contract.historiques.length === 0" class="alert alert-info">
+            No modification history available.
+          </div>
+          <ul class="list-group" *ngIf="contract.historiques && contract.historiques.length > 0">
+            <li class="list-group-item" *ngFor="let historique of contract.historiques">
+              <div class="d-flex w-100 justify-content-between">
+                <small>{{ historique.date | date }}</small>
+              </div>
+              <p class="mb-1">{{ historique.description }}</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

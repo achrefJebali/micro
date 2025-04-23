@@ -1,0 +1,104 @@
+services:
+  config-server:
+    build: ../Back-config-server
+    ports:
+      - "8888:8888"
+    networks:
+      - micro-net
+  eureka-server:
+    build: ../Back-eurika
+    ports:
+      - "8761:8761"
+    depends_on:
+      - config-server
+    networks:
+      - micro-net
+  api-gateway:
+    build: ../Back-apigetway
+    ports:
+      - "8081:8081"
+    depends_on:
+      - eureka-server
+      - config-server
+    networks:
+      - micro-net
+  back-equipe:
+    build: ../Back-Equipe
+    ports:
+      - "8082:8082"
+    depends_on:
+      - eureka-server
+      - config-server
+    networks:
+      - micro-net
+  back-ressource:
+    build: ../Back-ressource1.1
+    ports:
+      - "8083:8083"
+    depends_on:
+      - eureka-server
+      - config-server
+    networks:
+      - micro-net
+  back-contrat:
+    build: ../Back-contrat.1.1
+    ports:
+      - "8084:8084"
+    depends_on:
+      - eureka-server
+      - config-server
+    networks:
+      - micro-net
+  back-departement:
+    build: ../Back-departement1.1
+    ports:
+      - "8085:8085"
+    depends_on:
+      - eureka-server
+      - config-server
+    networks:
+      - micro-net
+  back-formation:
+    build: ../Back-formation
+    ports:
+      - "8086:8086"
+    depends_on:
+      - eureka-server
+      - config-server
+    networks:
+      - micro-net
+  back-university:
+    build: ../Back-university1.1
+    ports:
+      - "8087:8087"
+    depends_on:
+      - eureka-server
+      - config-server
+    networks:
+      - micro-net
+  back-node-service:
+    build: ../Back-node-service
+    ports:
+      - "8090:8090"
+    networks:
+      - micro-net
+  micro-front:
+    build: ../micro-front
+    ports:
+      - "80:80"
+    networks:
+      - micro-net
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    command: start-dev
+    ports:
+      - "8080:8080"
+    networks:
+      - micro-net
+
+networks:
+  micro-net:
+    driver: bridge

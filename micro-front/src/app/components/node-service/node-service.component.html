@@ -1,0 +1,133 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Node Service Management</h2>
+    <div>
+      <button class="btn btn-outline-primary me-2" (click)="checkNodeService()" [disabled]="loading">
+        <i class="material-icons">refresh</i> Refresh Status
+      </button>
+      <button class="btn btn-warning" (click)="restartService()" [disabled]="loading || serviceStatus === 'Offline'">
+        <i class="material-icons">restart_alt</i> Restart Service
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div *ngIf="loading" class="text-center my-3">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Service Status</h5>
+          <span class="badge" [ngClass]="serviceStatus === 'Online' ? 'bg-success' : (serviceStatus === 'Checking...' ? 'bg-info' : 'bg-danger')">
+            {{ serviceStatus }}
+          </span>
+        </div>
+        <div class="card-body">
+          <div *ngIf="serviceInfo">
+            <table class="table table-borderless">
+              <tbody>
+                <tr>
+                  <th scope="row">Service Name:</th>
+                  <td>{{ serviceInfo.name || 'Node Service' }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Version:</th>
+                  <td>{{ serviceInfo.version || 'N/A' }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Uptime:</th>
+                  <td>{{ serviceInfo.uptime || 'N/A' }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Environment:</th>
+                  <td>{{ serviceInfo.environment || 'N/A' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div *ngIf="!serviceInfo && serviceStatus !== 'Checking...'">
+            <div class="alert alert-warning">
+              <i class="material-icons">warning</i> Service is not responding. Check if the Node service is running.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" *ngIf="metrics">
+        <div class="card-header">
+          <h5 class="mb-0">Service Metrics</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <div class="card bg-light">
+                <div class="card-body text-center">
+                  <h6 class="card-title">Memory Usage</h6>
+                  <h3>{{ metrics.memory ? (metrics.memory.used / (1024 * 1024)).toFixed(2) + ' MB' : 'N/A' }}</h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="card bg-light">
+                <div class="card-body text-center">
+                  <h6 class="card-title">CPU Usage</h6>
+                  <h3>{{ metrics.cpu ? metrics.cpu.usage + '%' : 'N/A' }}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <div class="card bg-light">
+                <div class="card-body text-center">
+                  <h6 class="card-title">Active Connections</h6>
+                  <h3>{{ metrics.connections?.active || 'N/A' }}</h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <div class="card bg-light">
+                <div class="card-body text-center">
+                  <h6 class="card-title">Requests/Min</h6>
+                  <h3>{{ metrics.requests?.perMinute || 'N/A' }}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Service Logs</h5>
+          <button class="btn btn-sm btn-outline-danger" (click)="clearLogs()" [disabled]="logs.length === 0">
+            <i class="material-icons">delete</i> Clear Logs
+          </button>
+        </div>
+        <div class="card-body">
+          <div *ngIf="logs.length === 0" class="alert alert-info">
+            No logs available.
+          </div>
+          <div class="log-container border rounded p-2" style="max-height: 400px; overflow-y: auto;" *ngIf="logs.length > 0">
+            <pre *ngFor="let log of logs" [ngClass]="{
+              'text-danger': log.includes('ERROR'),
+              'text-warning': log.includes('WARN'),
+              'text-info': log.includes('INFO'),
+              'text-success': log.includes('SUCCESS')
+            }">{{ log }}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

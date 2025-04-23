@@ -1,0 +1,110 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Team Details</h2>
+    <div>
+      <button class="btn btn-outline-secondary me-2" (click)="goBack()">
+        <i class="material-icons">arrow_back</i> Back
+      </button>
+      <button class="btn btn-warning me-2" (click)="editTeam()">
+        <i class="material-icons">edit</i> Edit
+      </button>
+      <button class="btn btn-danger" (click)="deleteTeam()">
+        <i class="material-icons">delete</i> Delete
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div *ngIf="loading" class="text-center my-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="!loading && team">
+    <div class="col-md-8">
+      <div class="card mb-4">
+        <div class="card-header">
+          <div class="d-flex justify-content-between align-items-center">
+            <h4 class="mb-0">{{ team.nomEquipe }}</h4>
+            <span class="badge bg-primary">{{ team.niveau }}</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <h5>Team Information</h5>
+              <table class="table table-borderless">
+                <tbody>
+                  <tr>
+                    <th scope="row">ID:</th>
+                    <td>{{ team.idEquipe }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Number of Members:</th>
+                    <td>{{ team.nbMembres }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Average Age:</th>
+                    <td>{{ team.ageMoyen }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Projects Delivered:</th>
+                    <td>{{ team.projetsLivres }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Growth Potential:</th>
+                    <td>
+                      <span class="badge" [ngClass]="team.prochaineEvolution ? 'bg-success' : 'bg-warning'">
+                        {{ team.prochaineEvolution ? 'High' : 'Low' }}
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-md-6" *ngIf="team.detailEquipe">
+              <h5>Team Details</h5>
+              <table class="table table-borderless">
+                <tbody>
+                  <tr>
+                    <th scope="row">Room:</th>
+                    <td>{{ team.detailEquipe.salle }}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Theme:</th>
+                    <td>{{ team.detailEquipe.thematique }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">Team Members</h5>
+        </div>
+        <div class="card-body">
+          <div *ngIf="!team.etudiants || team.etudiants.length === 0" class="alert alert-info">
+            No members assigned to this team.
+          </div>
+          <ul class="list-group" *ngIf="team.etudiants && team.etudiants.length > 0">
+            <li class="list-group-item" *ngFor="let etudiant of team.etudiants">
+              <div class="d-flex w-100 justify-content-between">
+                <h6 class="mb-1">{{ etudiant.nom }} {{ etudiant.prenom }}</h6>
+                <small>{{ etudiant.option }}</small>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

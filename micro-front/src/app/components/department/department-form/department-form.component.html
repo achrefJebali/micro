@@ -1,0 +1,94 @@
+<div class="container-fluid">
+  <h2>{{ isEditMode ? 'Edit' : 'Create' }} Department</h2>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div *ngIf="loading" class="text-center my-3">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+      <form [formGroup]="departmentForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="nomDepart" class="form-label">Department Name</label>
+            <input type="text" class="form-control" id="nomDepart" formControlName="nomDepart"
+              [ngClass]="{ 'is-invalid': submitted && f.nomDepart.errors }">
+            <div *ngIf="submitted && f.nomDepart.errors" class="invalid-feedback">
+              <div *ngIf="f.nomDepart.errors.required">Department name is required</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="code" class="form-label">Department Code</label>
+            <input type="text" class="form-control" id="code" formControlName="code"
+              [ngClass]="{ 'is-invalid': submitted && f.code.errors }">
+            <div *ngIf="submitted && f.code.errors" class="invalid-feedback">
+              <div *ngIf="f.code.errors.required">Department code is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea class="form-control" id="description" rows="3" formControlName="description"
+            [ngClass]="{ 'is-invalid': submitted && f.description.errors }"></textarea>
+          <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+            <div *ngIf="f.description.errors.required">Description is required</div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" formControlName="email"
+              [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+              <div *ngIf="f.email.errors.required">Email is required</div>
+              <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="phone" class="form-label">Phone</label>
+            <input type="text" class="form-control" id="phone" formControlName="phone"
+              [ngClass]="{ 'is-invalid': submitted && f.phone.errors }">
+            <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+              <div *ngIf="f.phone.errors.required">Phone is required</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="createdDate" class="form-label">Created Date</label>
+            <input type="date" class="form-control" id="createdDate" formControlName="createdDate"
+              [ngClass]="{ 'is-invalid': submitted && f.createdDate.errors }">
+            <div *ngIf="submitted && f.createdDate.errors" class="invalid-feedback">
+              <div *ngIf="f.createdDate.errors.required">Created date is required</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-check mt-4">
+              <input class="form-check-input" type="checkbox" id="active" formControlName="active">
+              <label class="form-check-label" for="active">
+                Active
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-secondary me-2" (click)="onCancel()">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="loading">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+            {{ isEditMode ? 'Update' : 'Create' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -23,11 +23,11 @@ public class Etudiant implements Serializable{
     @OneToMany(mappedBy="etudiant", cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Contrat> Contrats;
+    
+    private Integer departementId;
 
-    @ManyToMany(mappedBy="etudiants")
-
+    @ManyToMany(mappedBy="etudiants")  
     @JsonIgnore
-    //  private Set<Equipe> equipes ;
     private List<Equipe> equipes ;
     public Etudiant() {
         // TODO Auto-generated constructor stub

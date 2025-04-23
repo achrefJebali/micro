@@ -10,6 +10,11 @@ import java.io.Serializable;
 @Setter
 @Entity
 public class Equipe implements Serializable {
+    @ManyToMany
+    private java.util.List<Etudiant> etudiants;
+    @OneToOne
+    @JoinColumn(name = "detail_equipe_id")
+    private DetailEquipe detailEquipe;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idEquipe;
@@ -18,8 +23,6 @@ public class Equipe implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private Niveau niveau;
-
-    private Integer detailEquipeId;
 
     // 📊 New fields for AI
     private Integer nbMembres;

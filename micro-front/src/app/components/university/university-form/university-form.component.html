@@ -1,0 +1,69 @@
+<div class="container-fluid">
+  <h2>{{ isEditMode ? 'Edit' : 'Create' }} University</h2>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div *ngIf="loading" class="text-center my-3">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+      <form [formGroup]="universityForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+        <div class="mb-3">
+          <label for="nomUniv" class="form-label">University Name</label>
+          <input type="text" class="form-control" id="nomUniv" formControlName="nomUniv"
+            [ngClass]="{ 'is-invalid': submitted && f.nomUniv.errors }">
+          <div *ngIf="submitted && f.nomUniv.errors" class="invalid-feedback">
+            <div *ngIf="f.nomUniv.errors.required">University name is required</div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label for="latitude" class="form-label">Latitude</label>
+            <input type="number" class="form-control" id="latitude" formControlName="latitude" step="0.000001"
+              [ngClass]="{ 'is-invalid': submitted && f.latitude.errors }">
+            <div *ngIf="submitted && f.latitude.errors" class="invalid-feedback">
+              <div *ngIf="f.latitude.errors.required">Latitude is required</div>
+              <div *ngIf="f.latitude.errors.min || f.latitude.errors.max">Latitude must be between -90 and 90</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="longitude" class="form-label">Longitude</label>
+            <input type="number" class="form-control" id="longitude" formControlName="longitude" step="0.000001"
+              [ngClass]="{ 'is-invalid': submitted && f.longitude.errors }">
+            <div *ngIf="submitted && f.longitude.errors" class="invalid-feedback">
+              <div *ngIf="f.longitude.errors.required">Longitude is required</div>
+              <div *ngIf="f.longitude.errors.min || f.longitude.errors.max">Longitude must be between -180 and 180</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Map Preview</label>
+          <div class="map-preview border rounded p-3 text-center">
+            <p class="mb-2">Location: {{ f.latitude.value }}, {{ f.longitude.value }}</p>
+            <a [href]="'https://www.google.com/maps?q=' + f.latitude.value + ',' + f.longitude.value" 
+               target="_blank" 
+               class="btn btn-outline-primary">
+              <i class="material-icons">map</i> View on Google Maps
+            </a>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-secondary me-2" (click)="onCancel()">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="loading">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+            {{ isEditMode ? 'Update' : 'Create' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,7 +1,6 @@
 package com.example.contrat.services;
 import com.example.contrat.entities.Contrat;
 
-import java.util.Date;
 import java.util.List;
 
 public interface IContratService {

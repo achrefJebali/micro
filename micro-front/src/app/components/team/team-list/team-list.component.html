@@ -1,0 +1,71 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Teams</h2>
+    <button class="btn btn-primary" (click)="createTeam()">
+      <i class="material-icons">add</i> Add Team
+    </button>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div *ngIf="loading" class="text-center my-3">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+      <div *ngIf="!loading && teams.length === 0" class="alert alert-info">
+        No teams found. Click the Add Team button to create one.
+      </div>
+
+      <div *ngIf="!loading && teams.length > 0" class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Level</th>
+              <th>Members</th>
+              <th>Avg. Age</th>
+              <th>Projects</th>
+              <th>Growth Potential</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let team of teams">
+              <td>{{ team.idEquipe }}</td>
+              <td>{{ team.nomEquipe }}</td>
+              <td>{{ team.niveau }}</td>
+              <td>{{ team.nbMembres }}</td>
+              <td>{{ team.ageMoyen }}</td>
+              <td>{{ team.projetsLivres }}</td>
+              <td>
+                <span class="badge" [ngClass]="team.prochaineEvolution ? 'bg-success' : 'bg-warning'">
+                  {{ team.prochaineEvolution ? 'High' : 'Low' }}
+                </span>
+              </td>
+              <td>
+                <div class="btn-group">
+                  <button class="btn btn-sm btn-info" (click)="viewDetails(team.idEquipe)">
+                    <i class="material-icons">visibility</i>
+                  </button>
+                  <button class="btn btn-sm btn-warning" (click)="editTeam(team.idEquipe)">
+                    <i class="material-icons">edit</i>
+                  </button>
+                  <button class="btn btn-sm btn-danger" (click)="deleteTeam(team.idEquipe)">
+                    <i class="material-icons">delete</i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

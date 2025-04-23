@@ -1,0 +1,5 @@
+### Example: Call Java microservice endpoint
+GET http://localhost:8082/api/equipe
+
+### Example: Call Node.js microservice endpoint
+GET http://localhost:8090/api/node/hello

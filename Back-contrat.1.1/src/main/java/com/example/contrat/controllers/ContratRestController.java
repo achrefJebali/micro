@@ -6,12 +6,10 @@ import com.example.contrat.services.HistoriqueModificationService;
 import com.example.contrat.services.IContratService;
 import lombok.AllArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -19,7 +17,9 @@ import java.util.List;
 //@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/Contrat")
 public class ContratRestController {
+	@Autowired
 	IContratService contratService;
+
 	private final HistoriqueModificationService historiqueModificationService;
 	// http://localhost:8044/Kaddem/contrat/retrieve-all-contrats
 

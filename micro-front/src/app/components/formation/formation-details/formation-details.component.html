@@ -1,0 +1,103 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Formation Details</h2>
+    <div>
+      <button class="btn btn-outline-secondary me-2" (click)="goBack()">
+        <i class="material-icons">arrow_back</i> Back
+      </button>
+      <button class="btn btn-warning me-2" (click)="editFormation()">
+        <i class="material-icons">edit</i> Edit
+      </button>
+      <button class="btn btn-danger" (click)="deleteFormation()">
+        <i class="material-icons">delete</i> Delete
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div *ngIf="loading" class="text-center my-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="!loading && formation">
+    <div class="card-header">
+      <div class="d-flex justify-content-between align-items-center">
+        <h4 class="mb-0">{{ formation.nomFormation }}</h4>
+        <span class="badge" [ngClass]="getStatusClass(formation.statut)">
+          {{ formation.statut }}
+        </span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-8">
+          <h5>Formation Details</h5>
+          <table class="table table-borderless">
+            <tbody>
+              <tr>
+                <th scope="row">ID:</th>
+                <td>{{ formation.id }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Date:</th>
+                <td>{{ formation.dateFormation | date:'fullDate' }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Available Seats:</th>
+                <td>{{ formation.nombrePlace }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Price:</th>
+                <td>{{ formation.prix }} $</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-4">
+          <div class="price-card text-center p-4 border rounded">
+            <h3>{{ formation.prix }} $</h3>
+            <p class="mb-3">Per participant</p>
+            <button class="btn btn-success btn-lg w-100">Register Now</button>
+            <p class="mt-2 small text-muted">{{ formation.nombrePlace }} seats available</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-12">
+          <h5>Description</h5>
+          <p>{{ formation.description }}</p>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-12">
+          <h5>Training Benefits</h5>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <i class="material-icons text-success me-2">check_circle</i>
+              Comprehensive training materials
+            </li>
+            <li class="list-group-item">
+              <i class="material-icons text-success me-2">check_circle</i>
+              Hands-on exercises and projects
+            </li>
+            <li class="list-group-item">
+              <i class="material-icons text-success me-2">check_circle</i>
+              Industry-experienced trainers
+            </li>
+            <li class="list-group-item">
+              <i class="material-icons text-success me-2">check_circle</i>
+              Certificate of completion
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

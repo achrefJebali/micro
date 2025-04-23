@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Microservices Project - Final Delivery
 
 ## Overview
@@ -58,3 +59,20 @@ A microservice must be implemented in a different technology than Java/Spring Bo
 
 # License
 - [Your License Here]
+=======
+Microservice Ressource – Spring Boot
+Microservice pour la gestion des universités avec localisation par maps pour chaque emplacement.
+Fonctionnalités principales
+Ajouter une université 
+Récupérer / modifier / supprimer des universités
+emplacement pour chaque université   (Maps)
+
+Technologies utilisées
+Spring Boot, Spring Data JPA
+Lombok, MultipartFile
+H2
+
+Points ajoutés :
+** Dockerisation
+** Logs et journalisation
+>>>>>>> 161c8ce1 (Initial commit)

@@ -1,0 +1,64 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Universities</h2>
+    <button class="btn btn-primary" (click)="createUniversity()">
+      <i class="material-icons">add</i> Add University
+    </button>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div *ngIf="loading" class="text-center my-3">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+      <div *ngIf="!loading && universities.length === 0" class="alert alert-info">
+        No universities found. Click the Add University button to create one.
+      </div>
+
+      <div *ngIf="!loading && universities.length > 0" class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Location</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let university of universities">
+              <td>{{ university.idUniv }}</td>
+              <td>{{ university.nomUniv }}</td>
+              <td>
+                <a [href]="getMapUrl(university.latitude, university.longitude)" target="_blank" class="btn btn-sm btn-outline-secondary">
+                  <i class="material-icons">place</i>
+                  {{ university.latitude.toFixed(4) }}, {{ university.longitude.toFixed(4) }}
+                </a>
+              </td>
+              <td>
+                <div class="btn-group">
+                  <button class="btn btn-sm btn-info" (click)="viewDetails(university.idUniv)">
+                    <i class="material-icons">visibility</i>
+                  </button>
+                  <button class="btn btn-sm btn-warning" (click)="editUniversity(university.idUniv)">
+                    <i class="material-icons">edit</i>
+                  </button>
+                  <button class="btn btn-sm btn-danger" (click)="deleteUniversity(university.idUniv)">
+                    <i class="material-icons">delete</i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

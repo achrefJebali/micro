@@ -2,7 +2,6 @@ package com.example.contrat.services;
 
 import com.example.contrat.entities.Contrat;
 import com.example.contrat.repositories.ContratRepository;
-import com.example.contrat.services.IContratService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

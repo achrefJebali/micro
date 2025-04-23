@@ -1,6 +1,5 @@
 package com.example.contrat.repositories;
 
-import com.example.contrat.entities.Contrat;
 import com.example.contrat.entities.HistoriqueModification;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

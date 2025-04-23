@@ -1,0 +1,21 @@
+# Example Keycloak configuration for Spring Boot microservices
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/microservices-realm
+      client:
+        registration:
+          keycloak:
+            client-id: microservices-client
+            client-secret: 3cwWTpESuM53ixXQBPoDtwCzeCPgwaon
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8081/login/oauth2/code/keycloak
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8080/realms/microservices-realm
+            authorization-uri: http://localhost:8080/realms/microservices-realm/protocol/openid-connect/auth
+            token-uri: http://localhost:8080/realms/microservices-realm/protocol/openid-connect/token
+            user-info-uri: http://localhost:8080/realms/microservices-realm/protocol/openid-connect/userinfo
+            jwk-set-uri: http://localhost:8080/realms/microservices-realm/protocol/openid-connect/certs

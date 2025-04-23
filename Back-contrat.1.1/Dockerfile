@@ -1,5 +1,10 @@
-#FROM mvn #pour automatiser la tache de clean install si on fait un changement de le code source on n'est pas nesoin de fait le clean install  manuellement
-FROM openjdk:17
-EXPOSE 8087
-ADD target/Contrat-0.0.1-SNAPSHOT.jar Contrat.jar
-ENTRYPOINT ["java" , "-jar" , "Contrat.jar"]
+FROM maven:3.8.5-openjdk-17-slim AS build
+WORKDIR /app
+COPY . /app
+RUN mvn package -DskipTests
+
+FROM openjdk:17-slim
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+EXPOSE 8084
+ENTRYPOINT ["java","-jar","app.jar"]

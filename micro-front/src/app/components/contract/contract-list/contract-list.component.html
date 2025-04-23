@@ -1,0 +1,71 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Contracts</h2>
+    <button class="btn btn-primary" (click)="createContract()">
+      <i class="material-icons">add</i> Add Contract
+    </button>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div *ngIf="loading" class="text-center my-3">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+      <div *ngIf="!loading && contracts.length === 0" class="alert alert-info">
+        No contracts found. Click the Add Contract button to create one.
+      </div>
+
+      <div *ngIf="!loading && contracts.length > 0" class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Speciality</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let contract of contracts">
+              <td>{{ contract.idContrat }}</td>
+              <td>{{ contract.nom }}</td>
+              <td>{{ contract.dateDebutContrat | date }}</td>
+              <td>{{ contract.dateFinContrat | date }}</td>
+              <td>{{ contract.specialite }}</td>
+              <td>{{ contract.montantContrat }} $</td>
+              <td>
+                <span class="badge" [ngClass]="!contract.archive ? 'bg-success' : 'bg-secondary'">
+                  {{ !contract.archive ? 'Active' : 'Archived' }}
+                </span>
+              </td>
+              <td>
+                <div class="btn-group">
+                  <button class="btn btn-sm btn-info" (click)="viewDetails(contract.idContrat)">
+                    <i class="material-icons">visibility</i>
+                  </button>
+                  <button class="btn btn-sm btn-warning" (click)="editContract(contract.idContrat)">
+                    <i class="material-icons">edit</i>
+                  </button>
+                  <button class="btn btn-sm btn-danger" (click)="deleteContract(contract.idContrat)">
+                    <i class="material-icons">delete</i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

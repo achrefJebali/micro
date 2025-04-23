@@ -13,6 +13,7 @@
         <module name="Contrat (1)" />
         <module name="universite" />
         <module name="Ressource" />
+        <module name="formation" />
         <module name="ApiGetWay" />
         <module name="Contrat" />
       </profile>
@@ -27,6 +28,7 @@
       <module name="Ressource" options="-parameters" />
       <module name="departementMicroService" options="-parameters" />
       <module name="eurika" options="-parameters" />
+      <module name="formation" options="-parameters" />
       <module name="universite" options="-parameters" />
     </option>
   </component>

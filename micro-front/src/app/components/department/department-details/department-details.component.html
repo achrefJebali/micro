@@ -1,0 +1,81 @@
+<div class="container-fluid">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Department Details</h2>
+    <div>
+      <button class="btn btn-outline-secondary me-2" (click)="goBack()">
+        <i class="material-icons">arrow_back</i> Back
+      </button>
+      <button class="btn btn-warning me-2" (click)="editDepartment()">
+        <i class="material-icons">edit</i> Edit
+      </button>
+      <button class="btn btn-danger" (click)="deleteDepartment()">
+        <i class="material-icons">delete</i> Delete
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div *ngIf="loading" class="text-center my-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div class="card" *ngIf="!loading && department">
+    <div class="card-header">
+      <div class="d-flex justify-content-between align-items-center">
+        <h4 class="mb-0">{{ department.nomDepart }}</h4>
+        <span class="badge" [ngClass]="department.active ? 'bg-success' : 'bg-danger'">
+          {{ department.active ? 'Active' : 'Inactive' }}
+        </span>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <h5>Basic Information</h5>
+          <table class="table table-borderless">
+            <tbody>
+              <tr>
+                <th scope="row">ID:</th>
+                <td>{{ department.idDepart }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Code:</th>
+                <td>{{ department.code }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Created Date:</th>
+                <td>{{ department.createdDate | date:'mediumDate' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <h5>Contact Information</h5>
+          <table class="table table-borderless">
+            <tbody>
+              <tr>
+                <th scope="row">Email:</th>
+                <td>{{ department.email }}</td>
+              </tr>
+              <tr>
+                <th scope="row">Phone:</th>
+                <td>{{ department.phone }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-12">
+          <h5>Description</h5>
+          <p>{{ department.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

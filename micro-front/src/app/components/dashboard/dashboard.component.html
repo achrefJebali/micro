@@ -1,0 +1,73 @@
+<div class="container-fluid dashboard-container">
+  <h2 class="mb-4">Microservices Dashboard</h2>
+  
+  <div class="row">
+    <div class="col-md-3 mb-4" *ngFor="let service of serviceStatuses">
+      <div class="card dashboard-card">
+        <div class="card-body">
+          <div class="d-flex align-items-center justify-content-between">
+            <h5 class="card-title">{{ service.name }}</h5>
+            <i class="material-icons service-icon">{{ service.icon }}</i>
+          </div>
+          <div class="status-indicator">
+            <span class="badge" [ngClass]="service.status === 'Online' ? 'bg-success' : 'bg-danger'">
+              {{ service.status }}
+            </span>
+          </div>
+          <p class="card-text mt-2">
+            <span class="count-badge">{{ service.count }}</span> items
+          </p>
+          <a [routerLink]="['/' + service.name.toLowerCase().replace(' ', '-')]" class="btn btn-primary btn-sm mt-2">
+            Manage {{ service.name }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          System Overview
+        </div>
+        <div class="card-body">
+          <p>All microservices are running properly and connected to the Keycloak authentication server.</p>
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              API Gateway
+              <span class="badge bg-success">Online</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Eureka Service Registry
+              <span class="badge bg-success">Online</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Config Server
+              <span class="badge bg-success">Online</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Keycloak
+              <span class="badge bg-success">Online</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Recent Activity
+        </div>
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item">System initialized</li>
+            <li class="list-group-item">Connected to all microservices</li>
+            <li class="list-group-item">User authentication configured</li>
+            <li class="list-group-item">API Gateway routes established</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

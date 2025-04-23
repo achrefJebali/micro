@@ -1,13 +1,12 @@
 package com.esprit.microservice.departementmicroservice.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 
 @NoArgsConstructor
@@ -39,6 +38,9 @@ public class Departement implements Serializable {
 
     @JsonProperty("active")
     private boolean active; // Is the department currently active
+
+    private List<Integer> etudiantIds; // or Set<Integer>
+
 
     public Integer getIdDepart() {
         return idDepart;
