@@ -6,8 +6,5 @@ RUN mvn package -DskipTests
 FROM openjdk:17-slim
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
-EXPOSE 8081w
+EXPOSE 8057
 ENTRYPOINT ["java","-jar","app.jar"]
-
-
-
